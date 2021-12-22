@@ -14,33 +14,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
+
+	// add an initbinder ... to convert trim input strings
+	// remove leading and trailing whitespace
+	// resolve issue for our validation
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+	
+	
 	@RequestMapping("/showForm")
 	public String showForm(Model theModel) {
-
-		// create a student object
-		Customer theCustomer = new Customer();
-
-		// add student object to the model
-		theModel.addAttribute("customer", theCustomer);
-
+		
+		theModel.addAttribute("customer", new Customer());
+		
 		return "customer-form";
 	}
-
+	
 	@RequestMapping("/processForm")
-	public String processForm(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+	public String processForm(
+			@Valid @ModelAttribute("customer") Customer theCustomer,
+			BindingResult theBindingResult) {
+		
+		System.out.println("Last name: |" + theCustomer.getLastName() + "|");
+		
+		if (theBindingResult.hasErrors()) {
 			return "customer-form";
 		}
-
-		// log the input data
-		System.out.println("theCustomer: " + theCustomer.getFirstName() + " " + theCustomer.getLastName());
-
-		return "customer-confirmation";
-	}
-
-	@InitBinder
-	public void initBinder(WebDataBinder webDataBinder) {
-		StringTrimmerEditor stringTrimmer = new StringTrimmerEditor(true);
-		webDataBinder.registerCustomEditor(String.class, stringTrimmer);
+		else {
+			return "customer-confirmation";
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
