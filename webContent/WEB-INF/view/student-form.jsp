@@ -45,8 +45,9 @@
 		Mac OS <form:checkbox path="operatingSystems" value="Mac OS" />
 		MS Windows <form:checkbox path="operatingSystems" value="MS Window" />
 
-		<br><br>
-	
+		<br>
+		<br>
+
 		<input type="submit" value="Submit" />
 	
 	</form:form>
