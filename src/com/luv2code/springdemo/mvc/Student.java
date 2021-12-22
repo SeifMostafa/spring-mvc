@@ -2,6 +2,8 @@ package com.luv2code.springdemo.mvc;
 
 import java.util.LinkedHashMap;
 
+import com.luv2code.springdemo.mvc.validation.CourseCode;
+
 public class Student {
 
 	private String firstName;
@@ -12,6 +14,18 @@ public class Student {
 	private LinkedHashMap<String, String> countryOptions;
 	private String favoriteLanguage;
 	private String[] operatingSystems;
+
+	@CourseCode(value="ITI", message= "must start with ITI")
+	private String courseCode;
+	
+	
+	public String getCourseCode() {
+		return courseCode;
+	}
+
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
+	}
 
 	public String[] getOperatingSystems() {
 		return operatingSystems;
